@@ -1,0 +1,18 @@
+library ieee;
+use ieee.std_logic_1164.all;
+
+entity ALU is port(
+	A, B: in std_logic_vector(2 downto 0);
+	SEL: in std_logic_vector(1 downto 0);
+	S2, Cin2: in std_logic;
+	SAL: out std_logic_vector(2 downto 0);
+	Cout: out std_logic);
+end entity ALU;
+
+architecture arqtopALU of ALU is
+	signal cable1, cable2: std_logic_vector(2 downto 0);
+begin
+	U1: entity work.mux2x1 (arqmux2x1) port map(cable2, cable1, S2, SAL);
+	U2: entity work.topUarit(arqtopUarit) port map (A, B, SEL, Cin2, cable1, Cout);
+	U3: entity work.Ulog(arqUlog) port map (A, B, SEL, cable2);
+end architecture arqtopALU;
